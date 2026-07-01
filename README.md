@@ -48,5 +48,6 @@ App.jsx
 ├── startJob()     → triggers job creation
 ├── pollStatus()   → polls every 2 seconds
 └── UI renders     → status, jobId, timestamps
+## Author
  **Anand Bugalia**  <br>
 IIT Kanpur 
