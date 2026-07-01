@@ -44,3 +44,6 @@ http://localhost:5173
 - Click **Start Task** to trigger a background job
 - Frontend polls backend every 2 seconds for status updates
 - Status updates in real time: Pending → Processing → Completed
+##  Author
+**Anand Bugalia**<br>
+IIT Kanpur
