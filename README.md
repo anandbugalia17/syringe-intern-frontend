@@ -1,146 +1,135 @@
-# Syringe Intern Frontend
+# Syringe Intern — Frontend
 
-A React-based frontend application for an asynchronous job processing system. The application communicates with an Express backend to create background jobs, monitor their execution, and display live status updates using polling.
-
----
-
-## Features
-
-- Start asynchronous background jobs
-- Real-time job status tracking
-- Automatic polling every 2 seconds
-- Responsive user interface
-- Loading and status indicators
-- Handles Pending, Processing, Completed, and Failed states
+React frontend for an asynchronous background task processing demo, built with **React**, **Vite**, and **Tailwind CSS**. It talks to the Syringe Intern Backend (Express + MongoDB + QStash) to trigger jobs and poll their status in real time.
 
 ---
 
-## Tech Stack
+## ✨ Features
 
-- React
-- Vite
-- Tailwind CSS v4
-- JavaScript (ES6+)
-- Fetch API
-
----
-
-## Project Structure
-
-```
-src/
-├── components/
-├── App.jsx
-├── main.jsx
-└── index.css
-```
+- Trigger a background job with a single click
+- Real-time status updates via polling (`Pending → Processing → Completed`)
+- Clean, responsive UI styled with Tailwind CSS
+- Simple `.env`-based configuration to point at any backend URL
 
 ---
 
-## Prerequisites
+## 🧱 Tech Stack
 
-- Node.js v18 or later
+| Layer      | Technology        |
+|------------|--------------------|
+| Framework  | React (Vite)       |
+| Styling    | Tailwind CSS v4     |
+| HTTP       | Fetch / Axios       |
+| State      | React Hooks         |
+
+---
+
+## 📋 Prerequisites
+
+- Node.js v18 or higher
 - npm
-- Backend server running locally
+- The backend server running locally or deployed (handles job creation, MongoDB storage, and QStash webhooks)
 
 ---
 
-## Environment Variables
+## ⚙️ Environment Variables
 
-Create a `.env` file in the project root.
+Create a `.env` file in the project root:
 
-```env
+\`\`\`env
 VITE_BACKEND_URL=http://localhost:5000
-```
+\`\`\`
+
+| Variable            | Description                              |
+|---------------------|-------------------------------------------|
+| `VITE_BACKEND_URL`  | Base URL of the backend API server         |
 
 ---
 
-## Installation
+## 🚀 Setup & Run
 
-Clone the repository
-
-```bash
-git clone https://github.com/anandbugalia17/syringe-intern-frontend.git
-```
-
-Navigate to the project directory
-
-```bash
+**1. Clone the repository**
+\`\`\`bash
+git clone <your-repo-url>
 cd syringe-intern-frontend
-```
+\`\`\`
 
-Install dependencies
-
-```bash
+**2. Install dependencies**
+\`\`\`bash
 npm install
-```
+\`\`\`
 
-Start the development server
+**3. Configure environment variables**
 
-```bash
+Create a `.env` file as shown above.
+
+**4. Start the dev server**
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
-The application will be available at:
-
-```
+**5. Open in browser**
+\`\`\`
 http://localhost:5173
-```
+\`\`\`
 
 ---
 
-## API Integration
+## 🔄 How It Works
 
-The frontend communicates with the following backend endpoints:
+1. User clicks **Start Task** on the frontend.
+2. Frontend sends a `POST` request to `/api/jobs/start` on the backend.
+3. Backend creates a job in MongoDB, returns a unique `jobId`, and queues the task via QStash.
+4. Frontend begins polling `GET /api/jobs/:jobId` every 2 seconds.
+5. QStash triggers a webhook on the backend, which processes the job and updates its status in MongoDB.
+6. Frontend reflects the live status: `Pending → Processing → Completed`.
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/jobs/start` | Creates a new background job |
-| GET | `/api/jobs/:jobId` | Retrieves the current status of a job |
-
----
-
-## Workflow
-
-1. User clicks **Start Job**.
-2. Frontend sends a request to the backend.
-3. Backend creates a new job and returns a unique Job ID.
-4. Frontend periodically polls the backend every two seconds.
-5. The UI updates automatically as the job progresses through:
-
-```
-Pending → Processing → Completed
-```
+\`\`\`
+User → Start Task → Backend → MongoDB → QStash → Webhook
+                                                    │
+                                                    ▼
+Frontend (polling) ← Status Update ← MongoDB Update
+\`\`\`
 
 ---
 
-## Screenshots
+## 📁 Project Structure
 
-You can add screenshots here after completing the UI.
-
-Example:
-
-```
-screenshots/
-├── home.png
-├── processing.png
-└── completed.png
-```
-
----
-
-## Future Improvements
-
-- Progress bar
-- Toast notifications
-- Dark mode
-- Job history
-- Better error handling
+\`\`\`
+syringe-intern-frontend/
+├── src/
+│   ├── components/     # UI components (task button, status display, etc.)
+│   ├── hooks/          # Custom hooks (e.g. usePolling)
+│   ├── api/            # API request helpers
+│   ├── App.jsx
+│   └── main.jsx
+├── .env
+├── index.html
+├── package.json
+└── vite.config.js
+\`\`\`
 
 ---
 
-## Author
+## 🧪 Available Scripts
+
+| Command           | Description                     |
+|--------------------|----------------------------------|
+| `npm run dev`      | Start the development server     |
+| `npm run build`    | Build for production             |
+| `npm run preview`  | Preview the production build     |
+
+---
+
+## 🔗 Related Repositories
+
+- **Backend:** syringe-intern-backend — Express, MongoDB, Mongoose, and QStash integration
+
+---
+
+## 👤 Author
 
 **Anand Bugalia**
+IIT Kanpur
 
-B.Tech, IIT Kanpur
+---
